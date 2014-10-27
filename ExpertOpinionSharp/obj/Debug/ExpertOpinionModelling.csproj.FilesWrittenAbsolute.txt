@@ -1,0 +1,6 @@
+/Users/acailliau/Development/KAOSTools/ExpertOpinion/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/acailliau/Development/KAOSTools/ExpertOpinion/bin/Debug/MathNet.Numerics.dll
+/Users/acailliau/Development/KAOSTools/ExpertOpinion/bin/Debug/ExpertOpinion.exe.mdb
+/Users/acailliau/Development/KAOSTools/ExpertOpinion/bin/Debug/ExpertOpinion.exe
+/Users/acailliau/Development/KAOSTools/ExpertOpinion/obj/Debug/ExpertOpinion.exe
+/Users/acailliau/Development/KAOSTools/ExpertOpinion/obj/Debug/ExpertOpinion.exe.mdb
