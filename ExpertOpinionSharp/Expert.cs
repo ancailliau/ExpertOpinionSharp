@@ -6,7 +6,7 @@ namespace ExpertOpinionModelling
     /// <summary>
     /// Models an expert.
     /// </summary>
-    class Expert {
+    public class Expert {
 
         /// <summary>
         /// Gets the name of the expert
@@ -18,27 +18,39 @@ namespace ExpertOpinionModelling
         }
 
         /// <summary>
-        /// Gets the estimates for all variables
-        /// </summary>
-        /// <value>The estimates.</value>
-        public IDictionary<ExpertVariable, ExpertOpinion> Estimates {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ExpertOpinionModelling.Expert"/> class.
         /// </summary>
         /// <param name="name">Name.</param>
         /// <param name="estimates">Estimates.</param>
-        public Expert(string name, IEnumerable<ExpertOpinion> estimates)
+        public Expert(string name)
         {
             this.Name = name;
-            this.Estimates = new Dictionary<ExpertVariable, ExpertOpinion> ();
-            foreach (var e in estimates) {
-                Estimates.Add (e.Variable, e);
-            }
         }
 
+		public override bool Equals (object obj)
+    	{
+    		if (obj == null)
+    			return false;
+    		if (ReferenceEquals (this, obj))
+    			return true;
+    		if (obj.GetType () != typeof(Expert))
+    			return false;
+    		Expert other = (Expert)obj;
+    		return Name == other.Name;
+    	}
+    	
+
+    	public override int GetHashCode ()
+    	{
+    		unchecked {
+    			return (Name != null ? Name.GetHashCode () : 0);
+    		}
+    	}
+    	
+		public override string ToString ()
+    	{
+    		return string.Format ("[Expert: Name={0}]", Name);
+    	}
+    	
     }
 }

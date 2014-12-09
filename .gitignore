@@ -1,0 +1,7 @@
+.DS_Store
+ExpertOpinionSharp/bin
+ExpertOpinionSharp/obj
+ExpertOpinionSharp/packages
+ExpertOpinionSharp.Tests/bin
+ExpertOpinionSharp.Tests/obj
+*.userprefs
