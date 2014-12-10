@@ -87,7 +87,7 @@ namespace ExpertOpinionSharp.Frameworks
 			var min = bounds.Item1;
 			var max = bounds.Item2;
 
-			var xx = estimates.Get (variable);
+			var xx = Estimates.Get (variable);
             // var xx = expertEstimates.SelectMany(t => t);
 
             var xlist = xx.Union(new[] { min, max }).ToList();
@@ -106,7 +106,7 @@ namespace ExpertOpinionSharp.Frameworks
 				for (int l = this.Experts.Count() - 1; l >= 0; l--)
                 {
 					var currentExpert = Experts.Single (x => x.Name == orderedExpertNames [l]);
-					var ll = estimates [currentExpert, variable].ToList ();
+					var ll = Estimates [currentExpert, variable].ToList ();
 					// expertEstimates[l].ToList();
                     var index = ll.FindIndex(y => y > v);
                     if (index < 0)
@@ -154,18 +154,18 @@ namespace ExpertOpinionSharp.Frameworks
 
                         if (t == 0)
                         {
-							upper = this.estimates[expert, variable][t]; 
+							upper = this.Estimates[expert, variable][t]; 
 							vector[t] = (variable.Value <= upper) ? 1 : 0;
                         } 
-						else if (t == this.estimates.ArrayLength)
+						else if (t == this.Estimates.ArrayLength)
                         {
-							lower = this.estimates[expert, variable][t - 1];
+							lower = this.Estimates[expert, variable][t - 1];
 							vector[t] = (variable.Value > lower) ? 1 : 0;
                         }
                         else
                         {
-							lower = this.estimates[expert, variable][t - 1];
-							upper = this.estimates[expert, variable][t];
+							lower = this.Estimates[expert, variable][t - 1];
+							upper = this.Estimates[expert, variable][t];
 							vector[t] = (variable.Value > lower & variable.Value <= upper) ? 1 : 0;
                         }
                     }

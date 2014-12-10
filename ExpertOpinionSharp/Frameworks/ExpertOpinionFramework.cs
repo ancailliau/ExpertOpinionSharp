@@ -28,25 +28,25 @@ namespace ExpertOpinionSharp.Frameworks
 
 		public ISet<Expert> Experts {
 			get {
-				return new HashSet<Expert> (estimates.Keys1);
+				return new HashSet<Expert> (Estimates.Keys1);
 			}
 		}
 
 		public ISet<Variable> Variables {
 			get {
-				return new HashSet<Variable> (estimates.Keys2);
+				return new HashSet<Variable> (Estimates.Keys2);
 			}
 		}
 
-		protected CompositeKeyArray<Expert, Variable> estimates;
+		protected CompositeKeyArray<Expert, Variable> Estimates;
 
 		protected int NbQuantiles {
 			get {
-				return this.QuantileVector.Length - 2;
+				return QuantileVector.Length - 2;
 			}
 		}
 
-		private double[] _quantileVector;
+		double[] _quantileVector;
 
 		protected double[] QuantileVector {
 			get {
@@ -68,18 +68,18 @@ namespace ExpertOpinionSharp.Frameworks
 			set;
 		}
 
-		public ExpertOpinionFramework () : this (new double[] { 0, .5, 1 })
+		protected ExpertOpinionFramework () : this (new double[] { 0, .5, 1 })
 		{
 		}
 
-		public ExpertOpinionFramework (double[] quantileVector)
+		protected ExpertOpinionFramework (double[] quantileVector)
 		{
-			this.OvershootFactor = 0.1;
-			this.QuantileVector = quantileVector;
-			this.LowerBound = null;
-			this.UpperBound = null;
+			OvershootFactor = 0.1;
+			QuantileVector = quantileVector;
+			LowerBound = null;
+			UpperBound = null;
 
-			this.estimates = new CompositeKeyArray<Expert, Variable> (this.QuantileVector.Length - 2);
+			Estimates = new CompositeKeyArray<Expert, Variable> (QuantileVector.Length - 2);
 		}
 
 		public void AddEstimate (string expertName, string variableName, params double[] quantiles)
@@ -87,23 +87,21 @@ namespace ExpertOpinionSharp.Frameworks
 			Expert e;
 			Variable v;
 
-			;
-
-			if (!estimates.TryGetKey1 (x => x.Name == expertName, out e)) {
+			if (!Estimates.TryGetKey1 (x => x.Name == expertName, out e)) {
 				e = new Expert (expertName);
 			}
 
-			if (!estimates.TryGetKey2 (x => x.Name == variableName, out v)) {
+			if (!Estimates.TryGetKey2 (x => x.Name == variableName, out v)) {
 				v = new Variable (variableName);
 			}
 
-			estimates.Add (e, v, quantiles);
+			Estimates.Add (e, v, quantiles);
 		}
 
 		public void SetValue (string variableName, double value)
 		{
 			Variable v;
-			if (!estimates.TryGetKey2 (x => x.Name == variableName, out v)) {
+			if (!Estimates.TryGetKey2 (x => x.Name == variableName, out v)) {
 				throw new NotImplementedException ("Cannot set value of not estimated variable");
 			}
 			v.Value = value;
@@ -115,12 +113,12 @@ namespace ExpertOpinionSharp.Frameworks
 		/// <param name="var">Variable.</param>
 		public Tuple<double, double> GetBounds (Variable var)
 		{
-			var m = estimates.Min (var);
+			var m = Estimates.Min (var);
 			if (var.Value != null && var.Value < m)
 				m = (double) var.Value;
 			m = LowerBound != null ? Math.Max (m, (double) LowerBound) : m; 
 
-			var h = estimates.Max (var);
+			var h = Estimates.Max (var);
 			if (var.Value != null && var.Value > h)
 				h = (double) var.Value;
 			h = UpperBound != null ? Math.Min (h, (double) UpperBound) : h;
@@ -135,7 +133,7 @@ namespace ExpertOpinionSharp.Frameworks
 			var bounds = GetBounds (variable);
 			var expert = Experts.Single (x => x.Name == expertName);
 
-			var p = estimates [expert, variable];
+			var p = Estimates [expert, variable];
 			var tt = new List<double> (p.Length + 2);
 			tt.Add (bounds.Item1);
 			tt.AddRange (p);
@@ -149,63 +147,63 @@ namespace ExpertOpinionSharp.Frameworks
 
 		#region EstimateTable
 
-		protected class CompositeKeyArray<T, U> {
+		protected class CompositeKeyArray<T, TU> {
 
-			private int _arrayLength;
+			int _arrayLength;
 
-			private Dictionary<CompositeKey<T, U>, double[]> _table;
+			readonly Dictionary<CompositeKey<T, TU>, double[]> _table;
 
 			public CompositeKeyArray (int arrayLength)
 			{
 				_arrayLength = arrayLength;
-				_table = new Dictionary<CompositeKey<T, U>, double[]> ();
+				_table = new Dictionary<CompositeKey<T, TU>, double[]> ();
 			}
 
 			public IEnumerable<T> Keys1 {
 				get {
 					foreach (var ikey in _table.Keys) {
-						yield return ikey.Expert;
+						yield return ikey.Key1;
 					}
 				}
 			}
 
-			public IEnumerable<U> Keys2 {
+			public IEnumerable<TU> Keys2 {
 				get {
 					foreach (var ikey in _table.Keys) {
-						yield return ikey.Variable;
+						yield return ikey.Key2;
 					}
 				}
 			}
 
 			public bool ContainsKey1 (Func<T, bool> predicate) {
-				return _table.Keys.Any (x => predicate(x.Expert));
+				return _table.Keys.Any (x => predicate(x.Key1));
 			}
 
-			public bool ContainsKey2 (Func<U, bool> predicate) {
-				return _table.Keys.Any (x => predicate(x.Variable));
+			public bool ContainsKey2 (Func<TU, bool> predicate) {
+				return _table.Keys.Any (x => predicate(x.Key2));
 			}
 
 			public bool TryGetKey1 (Func<T, bool> predicate, out T value) {
-				var tmp = _table.Keys.FirstOrDefault (x => predicate(x.Expert));
-				value = (tmp != null) ? tmp.Expert : default(T);
+				var tmp = _table.Keys.FirstOrDefault (x => predicate(x.Key1));
+				value = (tmp != null) ? tmp.Key1 : default(T);
 				return value != null;
 			}
 
-			public bool TryGetKey2 (Func<U, bool> predicate, out U value) {
-				var tmp = _table.Keys.FirstOrDefault (x => predicate(x.Variable));
-				value = (tmp != null) ? tmp.Variable : default(U);
+			public bool TryGetKey2 (Func<TU, bool> predicate, out TU value) {
+				var tmp = _table.Keys.FirstOrDefault (x => predicate(x.Key2));
+				value = (tmp != null) ? tmp.Key2 : default(TU);
 				return value != null;
 			}
 
-			public double[] this[T e, U v]
+			public double[] this[T e, TU v]
 			{
 				get
 				{
-					return _table[new CompositeKey<T, U> (e, v)];
+					return _table[new CompositeKey<T, TU> (e, v)];
 				}
 				set
 				{
-					_table[new CompositeKey<T, U> (e, v)] = value;
+					_table[new CompositeKey<T, TU> (e, v)] = value;
 				}
 			}
 
@@ -215,41 +213,41 @@ namespace ExpertOpinionSharp.Frameworks
 				}
 			}
 
-			public IList<double> Get(U u)
+			public IList<double> Get(TU u)
 			{
-				var list = _table.Where (x => x.Key.Variable.Equals (u)).SelectMany (x => x.Value).ToList ();
+				var list = _table.Where (x => x.Key.Key2.Equals (u)).SelectMany (x => x.Value).ToList ();
 				list.Sort ();
 				return list;
 			}
 
 
-			public void Add (T e, U v, double[] quantiles)
+			public void Add (T e, TU v, double[] quantiles)
 			{
 				if (quantiles.Length != _arrayLength)
 					throw new ArgumentException ("Value has not the expected length (Expected: "+(quantiles.Length - 2)+", got "+quantiles.Length+")");
 
-				_table.Add (new CompositeKey<T, U> (e, v), quantiles);
+				_table.Add (new CompositeKey<T, TU> (e, v), quantiles);
 			}
 
-			public double Min (U v)
+			public double Min (TU v)
 			{
-				return _table.Where (x => x.Key.Variable.Equals (v)).Select (x => x.Value.Min ()).Min ();
+				return _table.Where (x => x.Key.Key2.Equals (v)).Min (x => x.Value.Min ());
 			}
 
-			public double Max (U v)
+			public double Max (TU v)
 			{
-				return _table.Where (x => x.Key.Variable.Equals (v)).Select (x => x.Value.Max ()).Max();
+				return _table.Where (x => x.Key.Key2.Equals (v)).Max (x => x.Value.Max ());
 			}
 
-			private class CompositeKey<W, X>
+			class CompositeKey<TW, TX>
 			{
-				public W Expert { get; private set; }
-				public X Variable  { get; private set; }
+				public TW Key1 { get; private set; }
+				public TX Key2  { get; private set; }
 
-				public CompositeKey (W expert, X variable)
+				public CompositeKey (TW key1, TX key2)
 				{
-					this.Expert = expert;
-					this.Variable = variable;
+					Key1 = key1;
+					Key2 = key2;
 				}
 
 				public override bool Equals (object obj)
@@ -258,16 +256,16 @@ namespace ExpertOpinionSharp.Frameworks
 						return false;
 					if (ReferenceEquals (this, obj))
 						return true;
-					if (obj.GetType () != typeof(CompositeKey<W,X>))
+					if (obj.GetType () != typeof(CompositeKey<TW,TX>))
 						return false;
-					var other = (CompositeKey<W,X>)obj;
-					return Expert.Equals (other.Expert) && Variable.Equals (other.Variable);
+					var other = (CompositeKey<TW,TX>)obj;
+					return Key1.Equals (other.Key1) && Key2.Equals (other.Key2);
 				}
 
 				public override int GetHashCode ()
 				{
 					unchecked {
-						return (Expert != null ? Expert.GetHashCode () : 0) ^ (Variable != null ? Variable.GetHashCode () : 0);
+						return (Key1 != null ? Key1.GetHashCode () : 0) ^ (Key2 != null ? Key2.GetHashCode () : 0);
 					}
 				}
 				

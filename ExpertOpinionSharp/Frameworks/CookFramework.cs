@@ -50,8 +50,8 @@ namespace ExpertOpinionSharp.Frameworks
             var h = t.Item2;
 
             for (int i = 0; i < 4; i++) {
-				var l0 = (i == 0) ? l : estimates[e,v][i - 1];
-				var l1 = (i == 3) ? h : estimates[e,v][i];
+				var l0 = (i == 0) ? l : Estimates[e,v][i - 1];
+				var l1 = (i == 3) ? h : Estimates[e,v][i];
                 res.Add (1.0d * (l1 - l0) / (h - l));
             }
 
@@ -71,7 +71,7 @@ namespace ExpertOpinionSharp.Frameworks
 				double probability = 0;
 				double sum = 0;
 				foreach (var e in Experts) {
-					var estimate = estimates [e, variable];
+					var estimate = Estimates [e, variable];
 					var l0 = (i == 0) ? lowerBound : estimate[i - 1];
 					var l1 = (i == 3) ? upperBound : estimate[i];
 					probability += weight[e] * (1.0d * (l1 - l0) / (upperBound - lowerBound));
@@ -185,8 +185,8 @@ namespace ExpertOpinionSharp.Frameworks
                 var s = 0d;
 				foreach (var v in Variables) {
                     var trueValue = v.Value;
-					if ((i <= 0 || estimates [e, v] [i - 1] <= trueValue)
-						& (i >= 3 || trueValue < estimates [e, v] [i])) {
+					if ((i <= 0 || Estimates [e, v] [i - 1] <= trueValue)
+						& (i >= 3 || trueValue < Estimates [e, v] [i])) {
                         s++;
                     }
                 }
@@ -271,7 +271,7 @@ namespace ExpertOpinionSharp.Frameworks
 
 			int i = 0;
 			foreach (var kv in weights) {
-				var p = estimates [kv.Item1, variable];
+				var p = Estimates [kv.Item1, variable];
 				var t = new [] { bounds.Item1, p [0], p [1], p [2], bounds.Item2 };
 				d [i] = new QuantileDistribution (QuantileVector, t);
 				w [i+1] = w [i] + kv.Item2;
