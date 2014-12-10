@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using MathNet.Numerics.Distributions;
-using System.Linq;
-using MathNet.Numerics.Random;
 
 namespace ExpertOpinionSharp.Distributions
 {
 	public class MixtureDistribution : IDistribution
 	{
-		private Random _random;
-		private double[] cummulativeWeight;
-		private QuantileDistribution[] distributions;
+		readonly Random _random;
+		readonly double[] cummulativeWeight;
+		readonly QuantileDistribution[] distributions;
 
 		public MixtureDistribution (double[] cummulativeWeight, QuantileDistribution[] distributions)
 		{

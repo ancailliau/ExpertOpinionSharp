@@ -1,23 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using MathNet.Numerics.Distributions;
-using System.Linq;
-using MathNet.Numerics.Random;
 
 namespace ExpertOpinionSharp.Distributions
 {
 	public class QuantileDistribution : IDistribution
 	{
-		private Random _random;
-		private double[] probabilities;
-		private double[] quantiles;
-
-		public QuantileDistribution (double[] quantiles)
-		{
-			_random = new Random ();
-			probabilities = new [] { 0, .05, .50, .95, 1 }; // TODO
-			this.quantiles = quantiles; // { 6500 7000 8000 }
-		}
+		readonly Random _random;
+		readonly double[] probabilities;
+		readonly double[] quantiles;
 
 		public QuantileDistribution (double[] probabilities, double[] quantiles)
 		{

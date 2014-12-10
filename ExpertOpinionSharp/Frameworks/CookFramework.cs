@@ -281,7 +281,7 @@ namespace ExpertOpinionSharp.Frameworks
 			foreach (var kv in enumerable) {
 				var p = estimates [kv.Item1, variable];
 				var t = new [] { bounds.Item1, p [0], p [1], p [2], bounds.Item2 };
-				d [i] = new QuantileDistribution (t);
+				d [i] = new QuantileDistribution (QuantileVector, t);
 				w [i+1] = w [i] + kv.Item2;
 				i++;
 			}
