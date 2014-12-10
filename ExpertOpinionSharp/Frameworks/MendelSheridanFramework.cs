@@ -59,7 +59,7 @@ namespace ExpertOpinionModelling
         /// <param name="expertEstimates">Expert estimates.</param>
         /// <param name="stops">Stops.</param>
         /// <param name="probabilities">Probabilities.</param>
-		public QuantileDistribution Fit(string variableName)
+		public override IDistribution Fit(string variableName)
         {
 
 			/* **** */

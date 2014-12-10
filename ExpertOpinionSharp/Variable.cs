@@ -52,9 +52,6 @@
 		{
 			return string.Format ("[Variable: Name={0}]", Name);
 		}
-		
-
-
     }
 }
 

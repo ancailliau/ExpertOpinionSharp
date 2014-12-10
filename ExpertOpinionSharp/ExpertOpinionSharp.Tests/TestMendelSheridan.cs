@@ -22,6 +22,7 @@ namespace ExpertOpinionSharp.Tests
 			ef.AddEstimate ("Samuel", "K2", 8000, 8600, 9000);
 
 			ef.SetValue ("Nil", 6550);
+			// ef.SetValue ("K2", 8611);
 
 			var distSimon = ef.GetDistribution ("Simon", "K2");
 			var distSamuel = ef.GetDistribution ("Samuel", "K2");

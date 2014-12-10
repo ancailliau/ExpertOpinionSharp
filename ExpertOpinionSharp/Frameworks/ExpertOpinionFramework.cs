@@ -128,7 +128,7 @@ namespace ExpertOpinionModelling
 			return new Tuple<double, double> (m - l, h + l);
 		}
 
-		public QuantileDistribution GetDistribution (string expertName, string variableName) 
+		public IDistribution GetDistribution (string expertName, string variableName) 
 		{
 			var variable = Variables.Single (x => x.Name == variableName);
 			var bounds = GetBounds (variable);
@@ -144,6 +144,7 @@ namespace ExpertOpinionModelling
 			return new QuantileDistribution (QuantileVector, t);
 		}
 
+		public abstract IDistribution Fit (string variableName);
 
 		#region EstimateTable
 

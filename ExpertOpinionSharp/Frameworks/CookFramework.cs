@@ -253,33 +253,12 @@ namespace ExpertOpinionModelling
 
 			var upperbound = GetWeights ().Max (x => x.Item2);
 
-			var optimalAlpha = Optimization.LocalMin(0, upperbound, (x) => -wdm(x), 1.2e-16, Math.Sqrt (Double.Epsilon));
+			var optimalAlpha = OptimizationHelper.LocalMin(0, upperbound, (x) => -wdm(x), 1.2e-16, Math.Sqrt (Double.Epsilon));
 			
 			return GetWeights (optimalAlpha);
 		}
 
-		public MaDistribution Estimate (string variableName) 
-		{
-			var variable = Variables.Single (x => x.Name == variableName);
-			var bounds = GetBounds (variable);
-			var dist = new MaDistribution ();
-
-			IEnumerable<Tuple<Expert, double>> enumerable;
-			if (UseOptimalAlpha) {
-				enumerable = GetOptimalWeights ();
-			} else {
-				enumerable = GetWeights (_alpha);
-			}
-			foreach (var kv in enumerable) {
-				var p = estimates [kv.Item1, variable];
-				var t = new [] { bounds.Item1, p [0], p [1], p [2], bounds.Item2 };
-				dist.Add (kv.Item2, new [] { .05, .45, .45, .05 }, t);
-			}
-
-			return dist;
-		}
-
-		public MixtureDistribution Estimate2 (string variableName) 
+		public override IDistribution Fit (string variableName) 
 		{
 			var variable = Variables.Single (x => x.Name == variableName);
 			var bounds = GetBounds (variable);

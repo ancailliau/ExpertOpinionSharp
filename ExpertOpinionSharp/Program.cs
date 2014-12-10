@@ -127,7 +127,7 @@ namespace ExpertOpinionModelling
 			var distSamuel = ef.GetDistribution ("Samuel", "K2");
 			var distAdrien = ef.GetDistribution ("Adrien", "K2");
 
-			var dm = ef.Estimate2 ("K2");
+			var dm = ef.Fit ("K2");
 
 			var f = new StreamWriter ("/Users/acailliau/Desktop/data.txt");
 			f.WriteLine ("sim,sam,adri,dm");
@@ -154,7 +154,7 @@ namespace ExpertOpinionModelling
 //			ef.AddEstimate ("Samuel", "K2", 8000, 8600, 9000);
 
 			ef.SetValue ("Nil", 6550);
-			var d = ef.Estimate2 ("K2");
+			var d = ef.Fit ("K2");
 
 			var simonDist = ef.GetDistribution ("K2", "Simon");
 //			Console.WriteLine (simonDist.Minimum + " - " + simonDist.Maximum);
