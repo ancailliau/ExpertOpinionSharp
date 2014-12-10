@@ -9,6 +9,38 @@ namespace ExpertOpinionSharp.Tests
 	public class TestMendelSheridan
 	{
 		[Test ()]
+		public void TestEarthMesureCase ()
+		{
+			var ef = new MendelSheridanFramework (new double[] { 0, .05, .5, .95, 1 });
+			ef.AddEstimate ("Simon", "Nil", 3000, 10000, 13000);
+			ef.AddEstimate ("Simon", "K2", 6500, 7500, 8500);
+
+			ef.AddEstimate ("Adrien", "Nil", 4000, 5500, 7000);
+			ef.AddEstimate ("Adrien", "K2", 8000, 8300, 8600);
+
+			ef.AddEstimate ("Samuel", "Nil", 3000, 6500, 7000);
+			ef.AddEstimate ("Samuel", "K2", 8000, 8600, 9000);
+
+			ef.SetValue ("Nil", 6550);
+
+			var distSimon = ef.GetDistribution ("Simon", "K2");
+			var distSamuel = ef.GetDistribution ("Samuel", "K2");
+			var distAdrien = ef.GetDistribution ("Adrien", "K2");
+
+			var dm = ef.Fit ("K2");
+
+			var f = new StreamWriter ("/Users/acailliau/Desktop/data.txt");
+			f.WriteLine ("sim,sam,adri,dm");
+			for (int i = 0; i < 500000; i++) {
+				f.Write ("{0:##.####},", distSimon.Sample ());
+				f.Write ("{0:##.####},", distSamuel.Sample ());
+				f.Write ("{0:##.####},", distAdrien.Sample ());
+				f.WriteLine ("{0:##.####}", dm.Sample ());
+			}
+			f.Close ();
+		}
+
+		[Test ()]
 		public void TestCase ()
 		{
 			var ef = new MendelSheridanFramework (new double[] { 0, .4, 1 });

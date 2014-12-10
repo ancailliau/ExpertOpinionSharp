@@ -15,6 +15,16 @@ namespace ExpertOpinionModelling
 			set;
 		}
 
+		public double? UpperBound {
+			get;
+			set;
+		}
+
+		public double? LowerBound {
+			get;
+			set;
+		}
+
 		public ISet<Expert> Experts {
 			get {
 				return new HashSet<Expert> (estimates.Keys1);
@@ -65,6 +75,8 @@ namespace ExpertOpinionModelling
 		{
 			this.OvershootFactor = 0.1;
 			this.QuantileVector = quantileVector;
+			this.LowerBound = null;
+			this.UpperBound = null;
 
 			this.estimates = new CompositeKeyArray<Expert, Variable> (this.QuantileVector.Length - 2);
 		}
@@ -103,12 +115,14 @@ namespace ExpertOpinionModelling
 		public Tuple<double, double> GetBounds (Variable var)
 		{
 			var m = estimates.Min (var);
-			if (var.Value != default(double) && var.Value < m)
+			if (var.Value != null && var.Value < m)
 				m = (double) var.Value;
+			m = LowerBound != null ? Math.Max (m, (double) LowerBound) : m; 
 
 			var h = estimates.Max (var);
-			if (var.Value != default(double) && var.Value > h)
+			if (var.Value != null && var.Value > h)
 				h = (double) var.Value;
+			h = UpperBound != null ? Math.Min (h, (double) UpperBound) : h;
 
 			var l = (h - m) * OvershootFactor;
 			return new Tuple<double, double> (m - l, h + l);

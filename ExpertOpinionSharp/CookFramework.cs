@@ -30,6 +30,12 @@ namespace ExpertOpinionModelling
 			UseOptimalAlpha = true;
         }
 
+		public CookFramework(double[] quantileVector) : base (quantileVector)
+		{
+			UseOptimalAlpha = true;
+		}
+
+
         /// <summary>
         /// Gets the interpolated distribution for the specified variable <c>v</c> and expert <c>e</c>
         /// </summary>
