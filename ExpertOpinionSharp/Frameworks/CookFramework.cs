@@ -8,8 +8,7 @@ namespace ExpertOpinionSharp.Frameworks
 {
 	public class CookFramework : ExpertOpinionFramework {
 
-
-		private double _alpha = 0d;
+		double _alpha;
 
 		public double Alpha {
 			get { 
@@ -26,8 +25,8 @@ namespace ExpertOpinionSharp.Frameworks
 			set;
 		}
 
-		public CookFramework() : base ()
-        {
+		public CookFramework()
+		{
 			UseOptimalAlpha = true;
         }
 
@@ -61,7 +60,7 @@ namespace ExpertOpinionSharp.Frameworks
 
 		public List<double> GetDMInterpolatedDistribution (Variable variable, double alpha)
 		{
-			var weight = this.GetWeights (alpha).ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2);
+			var weight = GetWeights (alpha).ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2);
 
 			var res = new List<double> ();
 			var bounds = GetBounds(variable);
@@ -136,8 +135,8 @@ namespace ExpertOpinionSharp.Frameworks
 		public double GetDMInformationScore (double alpha)
 		{
 			var score = 0d;
-			foreach (var v in Variables.OfType<Variable>()) {
-				var lscore = GetDMInformationScore(v, alpha);
+			foreach (var v in Variables) {
+				var lscore = GetDMInformationScore (v, alpha);
 				score += lscore;
 			}
 			return score / Variables.Count ();
@@ -186,8 +185,8 @@ namespace ExpertOpinionSharp.Frameworks
                 var s = 0d;
 				foreach (var v in Variables) {
                     var trueValue = v.Value;
-					if ((!(i > 0) || estimates[e,v][i - 1] <= trueValue)
-						& (!(i < 3) || trueValue < estimates[e,v][i])) {
+					if ((i <= 0 || estimates [e, v] [i - 1] <= trueValue)
+						& (i >= 3 || trueValue < estimates [e, v] [i])) {
                         s++;
                     }
                 }
@@ -238,15 +237,13 @@ namespace ExpertOpinionSharp.Frameworks
 			}).ToList ();
             scores.Sort ((x, y) => y.Item2.CompareTo(x.Item2));
             var scaling = scores.Sum (x => x.Item2);
-			if (!(scaling > 0))
-				return scores;
-            return scores.Select (x => new Tuple<Expert, double> (x.Item1, x.Item2 / scaling));
+			return !(scaling > 0) ? scores : scores.Select (x => new Tuple<Expert, double> (x.Item1, x.Item2 / scaling));
         }
 
 		public IEnumerable<Tuple<Expert, double>> GetOptimalWeights ()
 		{
-			var wdm = new Func<double, double> ((alpha) => {
-				var cdm = 1; // manager.GetDMCalibrationScore ();
+			var wdm = new Func<double, double> (alpha => {
+				const int cdm = 1; // manager.GetDMCalibrationScore ();
 				var idm = GetDMInformationScore (alpha);
 				var sum = GetWeights (alpha).Sum (x => x.Item2);
 				return sum > 0 ? ((cdm * idm) / sum) : (cdm * idm);
@@ -254,7 +251,7 @@ namespace ExpertOpinionSharp.Frameworks
 
 			var upperbound = GetWeights ().Max (x => x.Item2);
 
-			var optimalAlpha = OptimizationHelper.LocalMin(0, upperbound, (x) => -wdm(x), 1.2e-16, Math.Sqrt (Double.Epsilon));
+			var optimalAlpha = OptimizationHelper.LocalMin(0, upperbound, x => -wdm (x), 1.2e-16, Math.Sqrt (Double.Epsilon));
 			
 			return GetWeights (optimalAlpha);
 		}
@@ -270,15 +267,10 @@ namespace ExpertOpinionSharp.Frameworks
 			w [0] = 0;
 			w [w.Length - 1] = 1;
 
-			IEnumerable<Tuple<Expert, double>> enumerable;
-			if (UseOptimalAlpha) {
-				enumerable = GetOptimalWeights ();
-			} else {
-				enumerable = GetWeights (_alpha);
-			}
+			var weights = UseOptimalAlpha ? GetOptimalWeights () : GetWeights (_alpha);
 
 			int i = 0;
-			foreach (var kv in enumerable) {
+			foreach (var kv in weights) {
 				var p = estimates [kv.Item1, variable];
 				var t = new [] { bounds.Item1, p [0], p [1], p [2], bounds.Item2 };
 				d [i] = new QuantileDistribution (QuantileVector, t);
