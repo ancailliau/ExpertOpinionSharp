@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExpertOpinionModelling
+namespace ExpertOpinionSharp
 {
 	public static class OptimizationHelper
 	{

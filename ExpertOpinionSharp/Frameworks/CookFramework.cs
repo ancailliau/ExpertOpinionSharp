@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using MathNet.Numerics.Distributions;
+using ExpertOpinionSharp.Distributions;
 
-namespace ExpertOpinionModelling
+namespace ExpertOpinionSharp.Frameworks
 {
 	public class CookFramework : ExpertOpinionFramework {
 
@@ -258,7 +259,7 @@ namespace ExpertOpinionModelling
 			return GetWeights (optimalAlpha);
 		}
 
-		public override IDistribution Fit (string variableName) 
+		public override ExpertOpinionSharp.Distributions.IDistribution Fit (string variableName) 
 		{
 			var variable = Variables.Single (x => x.Name == variableName);
 			var bounds = GetBounds (variable);

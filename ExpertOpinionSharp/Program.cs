@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MathNet.Numerics.Distributions;
 using System.IO;
+using ExpertOpinionSharp.Frameworks;
 
-namespace ExpertOpinionModelling
+namespace ExpertOpinionSharp
 {
     class MainClass
     {

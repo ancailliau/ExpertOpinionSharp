@@ -1,4 +1,4 @@
-﻿namespace ExpertOpinionModelling
+﻿namespace ExpertOpinionSharp
 {
     /// <summary>
     /// Models a variable to be estimated or a calibration variable whose value is known.

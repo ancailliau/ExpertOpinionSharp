@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ExpertOpinionModelling
+﻿namespace ExpertOpinionSharp.Distributions
 {
 	public interface IDistribution
 	{

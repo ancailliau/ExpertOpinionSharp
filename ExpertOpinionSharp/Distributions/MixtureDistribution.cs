@@ -4,7 +4,7 @@ using MathNet.Numerics.Distributions;
 using System.Linq;
 using MathNet.Numerics.Random;
 
-namespace ExpertOpinionModelling
+namespace ExpertOpinionSharp.Distributions
 {
 	public class MixtureDistribution : IDistribution
 	{
