@@ -7,12 +7,12 @@ namespace ExpertOpinionSharp.Frameworks
 {
 	public class MendelSheridanFramework : ExpertOpinionFramework
     {
-		private CompositeKeyArray<Expert,Variable> z2;
-		private Dictionary<Variable, int[]> Z2;
-		private int[] S;
-		private double[] Pr;
+		CompositeKeyArray<Expert,Variable> z2;
+		Dictionary<Variable, int[]> Z2;
+		int[] S;
+		double[] Pr;
 
-		private string[] orderedExpertNames;
+		string[] orderedExpertNames;
 
         /// <summary>
         /// The number of combination between all quantiles of all experts
@@ -27,13 +27,13 @@ namespace ExpertOpinionSharp.Frameworks
         /// <item>...</item>
         /// </list>
         /// </remarks>
-		private int M {
+		int M {
 			get {
 				return (int)Math.Pow(z2.ArrayLength + 1, Experts.Count());
 			}
 		}
 
-		public MendelSheridanFramework () : base ()
+		public MendelSheridanFramework () 
 		{
 		}
 
@@ -41,43 +41,32 @@ namespace ExpertOpinionSharp.Frameworks
         {
         }
 
-		private IEnumerable<Expert> OrderedExperts {
+		IEnumerable<Expert> OrderedExperts {
 			get {
-				foreach (var e in orderedExpertNames.Select (x => this.Experts.First (y => y.Name == x))) {
+				foreach (var e in orderedExpertNames.Select (x => Experts.First (y => y.Name == x))) {
 					yield return e;
 				}
 			}
 		}
 
-        /// <summary>
-        /// Fit the specified <c>expertEstimates</c> using the calibration variables provided in the constructor.
-        /// </summary>
-        /// <remarks>
-        /// It fills <c>stops</c> with the intervals boundaries and <c>probabilities</c> with the corresponding
-        /// probabilities.
-        /// The function will assume a 10% overshoot for getting lower and upper bounds.
-        /// </remarks>
-        /// <param name="expertEstimates">Expert estimates.</param>
-        /// <param name="stops">Stops.</param>
-        /// <param name="probabilities">Probabilities.</param>
-		public override ExpertOpinionSharp.Distributions.IDistribution Fit(string variableName)
+		public override IDistribution Fit(string variableName)
         {
 
 			/* **** */
 
-			orderedExpertNames = new string[this.Experts.Count ()];
+			orderedExpertNames = new string[Experts.Count ()];
 			int j = 0;
-			foreach (var e in this.Experts) {
+			foreach (var e in Experts) {
 				orderedExpertNames [j] = e.Name;
 				j++;
 			}
 
 			/* ---- */
 
-			this.Buildz();
-			this.BuildZ();
-			this.BuildS();
-			this.BuildPr();
+			Buildz();
+			BuildZ();
+			BuildS();
+			BuildPr();
 
 			/* **** */
 
@@ -103,7 +92,7 @@ namespace ExpertOpinionSharp.Frameworks
 
                 // for getting the correct h, we need to compute it in the opposite
                 // direction; as h = ((...) * (m + 1) + j ) * (m + 1) + k for [...,j,k]
-				for (int l = this.Experts.Count() - 1; l >= 0; l--)
+				for (int l = Experts.Count() - 1; l >= 0; l--)
                 {
 					var currentExpert = Experts.Single (x => x.Name == orderedExpertNames [l]);
 					var ll = Estimates [currentExpert, variable].ToList ();
@@ -111,12 +100,12 @@ namespace ExpertOpinionSharp.Frameworks
                     var index = ll.FindIndex(y => y > v);
                     if (index < 0)
                     {
-                        index = this.NbQuantiles;
+                        index = NbQuantiles;
                     }
 
-                    h = (h * (this.NbQuantiles + 1)) + index;
+                    h = (h * (NbQuantiles + 1)) + index;
 				}
-                probabilities[i] *= this.Pr[h];
+                probabilities[i] *= Pr[h];
             }
 
             var sum = probabilities.Sum();
@@ -141,12 +130,12 @@ namespace ExpertOpinionSharp.Frameworks
         /// </summary>
         protected void Buildz()
         {
-			this.z2 = new CompositeKeyArray<Expert, Variable> (this.NbQuantiles + 1);
+			z2 = new CompositeKeyArray<Expert, Variable> (NbQuantiles + 1);
 			foreach (var expert in OrderedExperts)
             {
 				foreach (var variable in Variables.Where (x => x.Calibration))
                 {
-					var vector = new double[this.NbQuantiles + 1];
+					var vector = new double[NbQuantiles + 1];
         	
 					for (int t = 0; t < vector.Length; t++)
                     {
@@ -154,23 +143,23 @@ namespace ExpertOpinionSharp.Frameworks
 
                         if (t == 0)
                         {
-							upper = this.Estimates[expert, variable][t]; 
+							upper = Estimates[expert, variable][t]; 
 							vector[t] = (variable.Value <= upper) ? 1 : 0;
                         } 
-						else if (t == this.Estimates.ArrayLength)
+						else if (t == Estimates.ArrayLength)
                         {
-							lower = this.Estimates[expert, variable][t - 1];
+							lower = Estimates[expert, variable][t - 1];
 							vector[t] = (variable.Value > lower) ? 1 : 0;
                         }
                         else
                         {
-							lower = this.Estimates[expert, variable][t - 1];
-							upper = this.Estimates[expert, variable][t];
+							lower = Estimates[expert, variable][t - 1];
+							upper = Estimates[expert, variable][t];
 							vector[t] = (variable.Value > lower & variable.Value <= upper) ? 1 : 0;
                         }
                     }
 
-					this.z2.Add (expert, variable, vector);
+					z2.Add (expert, variable, vector);
                 }
             }
         }
@@ -180,22 +169,22 @@ namespace ExpertOpinionSharp.Frameworks
         /// </summary>
         protected void BuildZ()
         {
-			this.Z2 = new Dictionary<Variable, int[]> ();
+			Z2 = new Dictionary<Variable, int[]> ();
 			foreach (var variable in Variables.Where (x => x.Calibration))
             {
-				this.Z2[variable] = new int[this.M];
-                for (int h = 0; h < this.M; h++)
+				Z2[variable] = new int[M];
+                for (int h = 0; h < M; h++)
                 {
                     var hashI = h;
                     var result = true;
 					foreach (var expert in OrderedExperts)
                     {
-                        var index = hashI % (this.NbQuantiles + 1);
-                        result &= this.z2[expert, variable][index] == 1;
-                        hashI = hashI / (this.NbQuantiles + 1);
+                        var index = hashI % (NbQuantiles + 1);
+                        result &= z2[expert, variable][index] == 1;
+                        hashI = hashI / (NbQuantiles + 1);
                     }
 
-                    this.Z2[variable][h] = result ? 1 : 0;
+                    Z2[variable][h] = result ? 1 : 0;
                 }
             }
         }
@@ -205,12 +194,12 @@ namespace ExpertOpinionSharp.Frameworks
         /// </summary>
         protected void BuildS()
         {
-            this.S = new int[this.M];
-            for (int h = 0; h < this.M; h++)
+            S = new int[M];
+            for (int h = 0; h < M; h++)
             {
 				foreach (var variable in Variables.Where (x => x.Calibration))
                 {
-					this.S[h] += this.Z2[variable][h];
+					S[h] += Z2[variable][h];
                 }
             }
         }
@@ -220,22 +209,22 @@ namespace ExpertOpinionSharp.Frameworks
         /// </summary>
         protected void BuildPr()
         {
-            this.Pr = new double[this.M];
-            for (int h = 0; h < this.M; h++)
+            Pr = new double[M];
+            for (int h = 0; h < M; h++)
             {
                 double product = 1;
                 var hashI = h;
-				for (int i = 0; i < this.Experts.Count(); i++)
+				for (int i = 0; i < Experts.Count(); i++)
                 {
-                    var index = hashI % (this.NbQuantiles + 1);
-                    product *= this.ExpectedDensity[index];
-                    hashI = hashI / (this.NbQuantiles + 1);
+                    var index = hashI % (NbQuantiles + 1);
+                    product *= ExpectedDensity[index];
+                    hashI = hashI / (NbQuantiles + 1);
                 }
 
-				this.Pr[h] = (this.S[h] + 1) / (this.Variables.Count (x => x.Calibration) + (1 / product));
+				Pr[h] = (S[h] + 1) / (Variables.Count (x => x.Calibration) + (1 / product));
             }
 
-            this.Pr = this.Pr.Select(x => x / this.Pr.Sum()).ToArray();
+            Pr = Pr.Select(x => x / Pr.Sum()).ToArray();
         }
     }
 }
