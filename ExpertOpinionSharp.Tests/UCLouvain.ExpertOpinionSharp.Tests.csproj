@@ -32,12 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Numerics" />
-    <Reference Include="MathNet.Numerics">
-      <HintPath>..\packages\MathNet.Numerics.3.18.0\lib\net40\MathNet.Numerics.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Test.cs" />
@@ -49,8 +43,5 @@
       <Project>{17EE1289-7F54-404E-BD17-2FAB7D0C59C5}</Project>
       <Name>UCLouvain.ExpertOpinionSharp</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>
