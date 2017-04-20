@@ -51,38 +51,6 @@ namespace UCLouvain.ExpertOpinionSharp
 
 			return result;
 		}
-
-		public CairoBarChart ToCairoBarChart ()
-		{
-			var chart = new CairoBarChart ();
-
-			var stops = LinSpace (low, high, nbin + 1).ToArray ();
-			var width = stops[1] - stops[0];
-
-			Console.WriteLine (string.Join("\n", stops));
-			
-
-			var sorteddata = data.ToList ();
-			sorteddata.Sort ();
-
-			var hist = new int[nbin+1];
-
-			var currentBin = 0;
-			for (int index = 0; index < sorteddata.Count; index++) {
-				while (currentBin + 1 < nbin + 1 && sorteddata [index] >= stops [currentBin + 1])
-					currentBin++;
-				hist [currentBin]++;
-			}
-
-			// chart.XAxis.SetBounds (lowScore, highScore);
-			// chart.YAxis.SetBounds (0, hist.Max ());
-
-			for (int index = 0; index < hist.Length; index++) {
-				chart.Data.Add (stops[index], stops[index] + width, hist [index]);
-			}
-
-			return chart;
-		}
 	}
 }
 
