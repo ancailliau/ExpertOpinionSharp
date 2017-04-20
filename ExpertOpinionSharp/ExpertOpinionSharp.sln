@@ -5,6 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertOpinionSharp", "Exper
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertOpinionSharp.Tests", "ExpertOpinionSharp.Tests\ExpertOpinionSharp.Tests.csproj", "{2AC0241F-E158-460C-BF30-A385FB80F88F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp", "..\..\VizuSharp\VizuSharp\VizuSharp.csproj", "{6FE1DC5A-E704-435B-A276-5DDAA0912EA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp.Cairo", "..\..\VizuSharp\VizuSharp.Cairo\VizuSharp.Cairo.csproj", "{40CA46CD-12FF-491F-A251-2D00928E643F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp.Tests", "..\..\VizuSharp\VizuSharp.Tests\VizuSharp.Tests.csproj", "{CA77F7B4-7341-4F1A-9E10-F28E0065A3B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,8 +25,17 @@ Global
 		{2AC0241F-E158-460C-BF30-A385FB80F88F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AC0241F-E158-460C-BF30-A385FB80F88F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AC0241F-E158-460C-BF30-A385FB80F88F}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = ExpertOpinionSharp.csproj
+		{40CA46CD-12FF-491F-A251-2D00928E643F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40CA46CD-12FF-491F-A251-2D00928E643F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40CA46CD-12FF-491F-A251-2D00928E643F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40CA46CD-12FF-491F-A251-2D00928E643F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FE1DC5A-E704-435B-A276-5DDAA0912EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE1DC5A-E704-435B-A276-5DDAA0912EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE1DC5A-E704-435B-A276-5DDAA0912EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE1DC5A-E704-435B-A276-5DDAA0912EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA77F7B4-7341-4F1A-9E10-F28E0065A3B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA77F7B4-7341-4F1A-9E10-F28E0065A3B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA77F7B4-7341-4F1A-9E10-F28E0065A3B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA77F7B4-7341-4F1A-9E10-F28E0065A3B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Linq;
 
-namespace ExpertOpinionSharp.Distributions
+namespace UCLouvain.ExpertOpinionSharp.Distributions
 {
 	public class MixtureDistribution : IDistribution
 	{
 		readonly Random _random;
-		readonly double[] cummulativeWeight;
-		readonly QuantileDistribution[] distributions;
+        public double[] cummulativeWeight;
+        public QuantileDistribution[] distributions;
 
 		public MixtureDistribution (double[] cummulativeWeight, QuantileDistribution[] distributions)
 		{
@@ -26,6 +27,18 @@ namespace ExpertOpinionSharp.Distributions
 				}
 			}
 			return distributions[i-1].Sample ();
+		}
+
+		public double LowerBound {
+			get {
+				return distributions.Min (x => x.LowerBound);
+			}
+		}
+
+		public double UpperBound {
+			get {
+				return distributions.Max (x => x.UpperBound);
+			}
 		}
 	}
 }

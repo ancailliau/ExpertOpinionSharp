@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ExpertOpinionSharp.Distributions;
+using UCLouvain.ExpertOpinionSharp.Distributions;
 
-namespace ExpertOpinionSharp.Frameworks
+namespace UCLouvain.ExpertOpinionSharp.Frameworks
 {
 	public class MendelSheridanFramework : ExpertOpinionFramework
     {
@@ -79,7 +79,9 @@ namespace ExpertOpinionSharp.Frameworks
 			var xx = Estimates.Get (variable);
             // var xx = expertEstimates.SelectMany(t => t);
 
-            var xlist = xx.Union(new[] { min, max }).ToList();
+            var xlist = new List<double> (xx);
+            xlist.Add (min);
+            xlist.Add (max);
             xlist.Sort();
 
             var probabilities = new double[xlist.Count - 1];
@@ -118,6 +120,7 @@ namespace ExpertOpinionSharp.Frameworks
 			for (ij = 1; ij < probabilities.Length; ij++) {
 				quantiles [ij] = quantiles[ij-1] + probabilities[ij-1];
 			}
+
 			quantiles [ij] = 1;
 
 			var dist = new QuantileDistribution (quantiles, stops);

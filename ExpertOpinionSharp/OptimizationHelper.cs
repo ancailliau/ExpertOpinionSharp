@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ExpertOpinionSharp
+namespace UCLouvain.ExpertOpinionSharp
 {
 	public static class OptimizationHelper
 	{

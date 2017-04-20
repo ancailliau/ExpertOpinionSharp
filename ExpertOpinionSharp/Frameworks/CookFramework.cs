@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using MathNet.Numerics.Distributions;
-using ExpertOpinionSharp.Distributions;
+using UCLouvain.ExpertOpinionSharp.Distributions;
 
-namespace ExpertOpinionSharp.Frameworks
+namespace UCLouvain.ExpertOpinionSharp.Frameworks
 {
 	public class CookFramework : ExpertOpinionFramework {
 
@@ -127,6 +127,7 @@ namespace ExpertOpinionSharp.Frameworks
             var score = 0d;
 			foreach (var v in Variables) {
                 var lscore = GetInformationScore(v, e);
+				// Console.WriteLine (lscore + " ==> " + v.Name + "/" + e.Name);
                 score += lscore;
             }
             return score / Variables.Count ();
@@ -155,8 +156,10 @@ namespace ExpertOpinionSharp.Frameworks
 
             for (int i = 0; i < 4; i++) {
                 var lscore = (s[i] * (s[i] > 0 ? Math.Log(s[i] / p[i]) : 0));
+                lscore = Math.Max (0, lscore);
                 score += lscore;
             }
+
             return 1 - ChiSquared.CDF (3, 2 * Variables.Count () * score);
         }
 
@@ -252,7 +255,7 @@ namespace ExpertOpinionSharp.Frameworks
 			var upperbound = GetWeights ().Max (x => x.Item2);
 
 			var optimalAlpha = OptimizationHelper.LocalMin(0, upperbound, x => -wdm (x), 1.2e-16, Math.Sqrt (Double.Epsilon));
-			
+			Console.WriteLine (optimalAlpha);
 			return GetWeights (optimalAlpha);
 		}
 

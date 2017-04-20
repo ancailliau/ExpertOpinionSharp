@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ExpertOpinionSharp.Distributions;
+using UCLouvain.ExpertOpinionSharp.Distributions;
 
-namespace ExpertOpinionSharp.Frameworks
+namespace UCLouvain.ExpertOpinionSharp.Frameworks
 {
 	public abstract class ExpertOpinionFramework
 	{

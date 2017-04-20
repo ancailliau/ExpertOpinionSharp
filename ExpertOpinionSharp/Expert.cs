@@ -1,4 +1,4 @@
-﻿namespace ExpertOpinionSharp
+﻿namespace UCLouvain.ExpertOpinionSharp
 {
     public class Expert {
 

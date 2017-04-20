@@ -7,3 +7,5 @@
 /Users/acailliau/Development/ExpertOpinionSharp/ExpertOpinionSharp/ExpertOpinionSharp.Tests/bin/Debug/ExpertOpinionSharp.Tests.dll
 /Users/acailliau/Development/ExpertOpinionSharp/ExpertOpinionSharp/ExpertOpinionSharp.Tests/obj/Debug/ExpertOpinionSharp.Tests.dll
 /Users/acailliau/Development/ExpertOpinionSharp/ExpertOpinionSharp/ExpertOpinionSharp.Tests/obj/Debug/ExpertOpinionSharp.Tests.dll.mdb
+/Users/acailliau/Development/ExpertOpinionSharp/ExpertOpinionSharp/ExpertOpinionSharp.Tests/bin/Debug/ExpertOpinionSharp.exe
+/Users/acailliau/Development/ExpertOpinionSharp/ExpertOpinionSharp/ExpertOpinionSharp.Tests/bin/Debug/ExpertOpinionSharp.exe.mdb

@@ -4,4 +4,7 @@ ExpertOpinionSharp/obj
 ExpertOpinionSharp/packages
 ExpertOpinionSharp.Tests/bin
 ExpertOpinionSharp.Tests/obj
+bin
+obj
+packages
 *.userprefs

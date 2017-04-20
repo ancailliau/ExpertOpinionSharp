@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Linq;
 
-namespace ExpertOpinionSharp.Distributions
+namespace UCLouvain.ExpertOpinionSharp.Distributions
 {
 	public class QuantileDistribution : IDistribution
 	{
 		readonly Random _random;
-		readonly double[] probabilities;
-		readonly double[] quantiles;
+		public readonly double[] probabilities;
+        public readonly double[] quantiles;
 
 		public QuantileDistribution (double[] probabilities, double[] quantiles)
 		{
@@ -30,6 +31,26 @@ namespace ExpertOpinionSharp.Distributions
 			var ss2 = ss * (quantiles [i] - quantiles [i - 1]) + quantiles[i - 1];
 			return ss2;
 		}
+
+		public double LowerBound {
+			get {
+				return quantiles.Min ();
+			}
+		}
+
+		public double UpperBound {
+			get {
+				return quantiles.Max ();
+			}
+		}
+
+		public override string ToString ()
+		{
+			return string.Format ("[QuantileDistribution: {0}]", 
+				string.Join (" ", Enumerable.Range (0, quantiles.Length).Select (i => quantiles[i] + ":" + probabilities[i]))
+			);
+		}
+		
 	}
 }
 
