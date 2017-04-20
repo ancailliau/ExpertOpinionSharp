@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>UCLouvain.ExpertOpinionSharp</id>
+    <version>0.1.0</version>
+    <title>UCLouvain.ExpertOpinionSharp</title>
+    <authors>Antoine Cailliau</authors>
+    <owners>Antoine Cailliau, Université catholique de Louvain</owners>
+    <licenseUrl>https://github.com/ancailliau/ExpertOpinionSharp/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ancailliau/ExpertOpinionSharp/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ExpertOpinionSharp is a library to combine expert opinions.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2014-2017</copyright>
+  </metadata>
+</package>
