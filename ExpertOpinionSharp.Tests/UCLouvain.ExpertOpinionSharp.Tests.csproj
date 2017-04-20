@@ -48,7 +48,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ExpertOpinionSharp.csproj">
+    <ProjectReference Include="..\ExpertOpinionSharp\UCLouvain.ExpertOpinionSharp.csproj">
       <Project>{17EE1289-7F54-404E-BD17-2FAB7D0C59C5}</Project>
       <Name>UCLouvain.ExpertOpinionSharp</Name>
     </ProjectReference>

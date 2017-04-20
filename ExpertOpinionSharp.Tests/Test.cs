@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
-using ExpertOpinionModelling;
+using UCLouvain.ExpertOpinionSharp.Frameworks;
 
 namespace ExpertOpinionSharp.Tests
 {
@@ -10,7 +10,8 @@ namespace ExpertOpinionSharp.Tests
 		[Test ()]
 		public void TestEarthMesureCase ()
 		{
-			var ef = new CookFramework ();
+			var ef = new CookFramework (new double[] { 0, .05, .5, .95, 1 });
+
 			ef.AddEstimate ("Simon", "Nil", 3000, 10000, 13000);
 			ef.AddEstimate ("Simon", "K2", 6500, 8000, 8500);
 
@@ -23,8 +24,8 @@ namespace ExpertOpinionSharp.Tests
 			ef.SetValue ("Nil", 6550);
 			// ef.SetValue ("K2", 8611);
 
-			var dist = ef.Estimate ("K2");
-			Console.WriteLine (dist.Mean);
+			var dist = ef.Fit ("K2");
+			// Console.WriteLine (dist.Mean);
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
-using ExpertOpinionModelling;
 using System.IO;
+using UCLouvain.ExpertOpinionSharp.Frameworks;
 
 namespace ExpertOpinionSharp.Tests
 {
