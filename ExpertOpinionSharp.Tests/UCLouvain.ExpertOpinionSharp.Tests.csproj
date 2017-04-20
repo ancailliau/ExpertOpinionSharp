@@ -7,15 +7,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2AC0241F-E158-460C-BF30-A385FB80F88F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>ExpertOpinionSharp.Tests</RootNamespace>
-    <AssemblyName>ExpertOpinionSharp.Tests</AssemblyName>
+    <RootNamespace>UCLouvain.ExpertOpinionSharp.Tests</RootNamespace>
+    <AssemblyName>UCLouvain.ExpertOpinionSharp.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -24,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
+    <OutputPath>..\bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
@@ -50,7 +50,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ExpertOpinionSharp.csproj">
       <Project>{17EE1289-7F54-404E-BD17-2FAB7D0C59C5}</Project>
-      <Name>ExpertOpinionSharp</Name>
+      <Name>UCLouvain.ExpertOpinionSharp</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

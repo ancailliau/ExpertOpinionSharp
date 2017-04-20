@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertOpinionSharp", "ExpertOpinionSharp.csproj", "{17EE1289-7F54-404E-BD17-2FAB7D0C59C5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCLouvain.ExpertOpinionSharp", "ExpertOpinionSharp\UCLouvain.ExpertOpinionSharp.csproj", "{17EE1289-7F54-404E-BD17-2FAB7D0C59C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertOpinionSharp.Tests", "ExpertOpinionSharp.Tests\ExpertOpinionSharp.Tests.csproj", "{2AC0241F-E158-460C-BF30-A385FB80F88F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UCLouvain.ExpertOpinionSharp.Tests", "ExpertOpinionSharp.Tests\UCLouvain.ExpertOpinionSharp.Tests.csproj", "{2AC0241F-E158-460C-BF30-A385FB80F88F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp", "..\..\VizuSharp\VizuSharp\VizuSharp.csproj", "{6FE1DC5A-E704-435B-A276-5DDAA0912EA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp", "..\VizuSharp\VizuSharp\VizuSharp.csproj", "{6FE1DC5A-E704-435B-A276-5DDAA0912EA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp.Cairo", "..\..\VizuSharp\VizuSharp.Cairo\VizuSharp.Cairo.csproj", "{40CA46CD-12FF-491F-A251-2D00928E643F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp.Cairo", "..\VizuSharp\VizuSharp.Cairo\VizuSharp.Cairo.csproj", "{40CA46CD-12FF-491F-A251-2D00928E643F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp.Tests", "..\..\VizuSharp\VizuSharp.Tests\VizuSharp.Tests.csproj", "{CA77F7B4-7341-4F1A-9E10-F28E0065A3B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VizuSharp.Tests", "..\VizuSharp\VizuSharp.Tests\VizuSharp.Tests.csproj", "{CA77F7B4-7341-4F1A-9E10-F28E0065A3B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -35,7 +35,7 @@
     <Reference Include="System.Numerics" />
     <Reference Include="Mono.Cairo" />
     <Reference Include="MathNet.Numerics">
-      <HintPath>..\..\KAOSTools\packages\MathNet.Numerics.3.7.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <HintPath>..\..\KAOSTools\packages\MathNet.Numerics.3.18.0\lib\net40\MathNet.Numerics.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
